@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity 2: What Would You Do?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#23304a; --paper:#fffdfb; --line:#d6dcee;
+  --head:"Fredoka","Trebuchet MS",sans-serif; --body:"Nunito","Segoe UI",sans-serif; --hand:"Caveat","Segoe Print",cursive;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;color:var(--ink);font-family:var(--body);line-height:1.6;padding:0 18px 72px;
+  background:radial-gradient(900px 520px at 6% -5%,#ffd6e4 0,transparent 62%),radial-gradient(800px 520px at 100% 0,#cfe2ff 0,transparent 62%),radial-gradient(900px 600px at 50% 110%,#d3f2e4 0,transparent 62%),#f7f5ff;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(35,48,74,.13) 1.2px,transparent 1.4px);background-size:26px 26px}
+header{max-width:1040px;margin:0 auto;padding:68px 0 44px;position:relative}
+.pill{display:inline-block;background:var(--ink);color:#fff;font:500 .92rem var(--head);padding:6px 18px;border-radius:99px;margin-bottom:18px}
+header h1{font-family:var(--head);font-weight:600;font-size:clamp(2.6rem,7vw,4.7rem);line-height:1.04;letter-spacing:-.01em}
+.squig{display:block;width:min(280px,60%);margin:8px 0 0}
+.squig path{stroke-dasharray:420;animation:drawonce 1.6s .3s ease-out both}
+header p{max-width:54ch;margin-top:18px;font-size:1.1rem}
+.q-float{position:absolute;right:3%;top:48px;display:flex;gap:12px}
+.q-float span{width:50px;height:50px;border-radius:50%;background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);display:grid;place-items:center;font:600 1.4rem var(--head);animation:float 3s ease-in-out infinite}
+.q-float span:nth-child(2){animation-delay:.5s;background:#f2b84b}
+.q-float span:nth-child(3){animation-delay:1s;background:#9fd8c3}
+@media(max-width:620px){.q-float{display:none}}
+main{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:38px 32px}
+@media(min-width:900px){main{grid-template-columns:1fr 1fr}}
+.card{position:relative;background:var(--paper);border:3px solid var(--ink);border-radius:28px;overflow:hidden;box-shadow:8px 8px 0 var(--c);transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--c)}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;aspect-ratio:320/180;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.4),transparent 45%,rgba(35,48,74,.14))}
+.scene{display:block;width:100%;height:auto;border-bottom:3px solid var(--ink);cursor:pointer}
+.body{padding:24px 26px 28px}
+.body h2{font-family:var(--head);font-weight:500;font-size:1.15rem;line-height:1.45;display:flex;gap:16px;align-items:flex-start}
+.no{flex:none;width:36px;height:36px;margin:3px 0 0 3px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font:600 1.05rem var(--head);box-shadow:0 0 0 3px #fff,0 0 0 5.5px var(--c)}
+.answer{margin-top:20px;min-height:180px;padding:4px 18px 4px 54px;border-radius:14px;border:2px solid var(--line);font:600 1.35rem/32px var(--hand);
+  background:linear-gradient(90deg,transparent 42px,#f08aa4 42px 44px,transparent 44px),repeating-linear-gradient(#fff 0 31px,#d6e3f7 31px 32px);box-shadow:inset 0 3px 10px rgba(35,48,74,.07)}
+.answer:empty::before{content:"Your answer goes here...";color:#b3bcd3}
+.scene use{filter:drop-shadow(0 3px 2px rgba(15,20,45,.28))}
+.scene.rp *{animation:none!important}
+@keyframes drawonce{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
+
+/* ---- scene animation ---- */
+.scene *{transform-box:fill-box;transform-origin:center}
+.scene:not(.on) *{animation-play-state:paused}
+.t{font:600 11px var(--head);fill:var(--ink)}
+.bob{animation:bob 2.2s ease-in-out infinite;transform-origin:center bottom}
+.hop{animation:hop .9s ease-in-out infinite;transform-origin:center bottom}
+.shake{animation:shake .25s linear infinite}
+.no-shake{animation:nope 1.4s ease-in-out infinite;transform-origin:center bottom}
+.float{animation:float 3s ease-in-out infinite}
+.pulse{animation:pulse 1.6s ease-in-out infinite}
+.pop{animation:pop 3s ease-in-out infinite}
+.pop2{animation:pop 3s ease-in-out 1.5s infinite}
+.spin{animation:spin 6s linear infinite}
+.drip{animation:drip 2s ease-in infinite}
+.twinkle{animation:twinkle 1.5s ease-in-out infinite}
+.peek{animation:peek 2.4s ease-in-out infinite}
+.tilt{animation:tilt 3s ease-in-out infinite}
+.rise{animation:rise 4s linear infinite}
+.fall{animation:fall 5s linear infinite}
+.shard{animation:shard 5s ease-out infinite}
+.draw{stroke-dasharray:140;animation:draw 4s ease-in-out infinite}
+.coin{animation:hop 1.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+@keyframes hop{50%{transform:translateY(-9px)}}
+@keyframes shake{25%{transform:translateX(-1.5px)}75%{transform:translateX(1.5px)}}
+@keyframes nope{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+@keyframes float{50%{transform:translateY(-8px)}}
+@keyframes pulse{50%{transform:scale(1.18);opacity:.7}}
+@keyframes pop{0%,10%{transform:scale(0)}20%,70%{transform:scale(1)}85%,100%{transform:scale(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drip{0%{transform:translateY(0);opacity:1}80%,100%{transform:translateY(34px);opacity:0}}
+@keyframes twinkle{50%{opacity:.2;transform:scale(.6)}}
+@keyframes peek{0%,100%{transform:translateY(8px) rotate(-6deg)}50%{transform:translateY(-3px) rotate(4deg)}}
+@keyframes tilt{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes rise{0%{transform:translateY(40px);opacity:0}15%,80%{opacity:1}100%{transform:translateY(-70px);opacity:0}}
+@keyframes draw{0%{stroke-dashoffset:140}60%,100%{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ---- realistic finish ---- */
+.card{border:1px solid rgba(35,48,74,.14);border-radius:24px;box-shadow:0 1px 2px rgba(20,25,50,.08),0 14px 26px -10px rgba(20,25,50,.25),0 38px 60px -26px var(--c)}
+.card:hover{transform:translateY(-5px);box-shadow:0 2px 4px rgba(20,25,50,.08),0 22px 34px -12px rgba(20,25,50,.3),0 48px 70px -26px var(--c)}
+.card::before{background:linear-gradient(180deg,rgba(255,255,255,.25),transparent 40%)}
+.scene{border-bottom:0}
+.no{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c),0 6px 10px -2px var(--c)}
+.q-float span{border-width:2px;box-shadow:0 8px 14px -4px rgba(20,25,50,.3)}
+.answer{background:linear-gradient(90deg,transparent 42px,#f08aa4 42px 44px,transparent 44px),repeating-linear-gradient(#fffefa 0 31px,#d6e3f7 31px 32px);box-shadow:inset 0 3px 10px rgba(35,48,74,.08),0 6px 16px -8px rgba(20,25,50,.2)}
+.card::before{display:none}
+.scene{background:#fff}
+
+/* scene 6: vase tips off the table, drops to the floor, shatters (5s loop) */
+@keyframes fall{
+  0%,24%{transform:none;opacity:1}
+  28%{transform:rotate(-4deg)}
+  32%{transform:rotate(3deg)}
+  44%{transform:translate(8px,0) rotate(38deg);animation-timing-function:cubic-bezier(.55,0,1,.7)}
+  66%{transform:translate(36px,52px) rotate(125deg);opacity:1}
+  66.5%,100%{transform:translate(36px,52px) rotate(125deg);opacity:0}
+}
+@keyframes shard{0%,65.5%{transform:scale(0);opacity:0}67%{transform:scale(.5);opacity:1}73%{transform:scale(1.08)}78%,96%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes frag{0%,65.5%{transform:translate(0,0);opacity:0}67%{opacity:1}74%{transform:translate(calc(var(--dx)*.7),var(--dy))}84%,96%{transform:translate(var(--dx),6px);opacity:1}100%{transform:translate(var(--dx),6px);opacity:0}}
+@keyframes puff{0%,65.5%{transform:scale(.3);opacity:0}67%{transform:scale(.5);opacity:.75}80%,100%{transform:scale(2.4);opacity:0}}
+@keyframes ohno{0%,65%{transform:scale(0)}69%{transform:scale(1.1)}72%,90%{transform:scale(1)}96%,100%{transform:scale(0)}}
+@keyframes flinch{0%,65%{transform:none}68%{transform:translateY(-10px)}72%{transform:translateY(0)}}
+.shard{animation:shard 5s ease-out infinite}
+.frag{animation:frag 5s ease-out infinite}
+.puff{animation:puff 5s ease-out infinite}
+.ohno{animation:ohno 5s ease-out infinite}
+.flinch{animation:flinch 5s ease-out infinite;transform-origin:center bottom}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="q-float" aria-hidden="true"><span>?</span><span>?</span><span>?</span></div>
+  <span class="pill">Activity 2</span>
+  <h1>What Would You Do?</h1>
+  <svg class="squig" viewBox="0 0 300 16" aria-hidden="true"><path d="M2 9q18-12 36 0t36 0t36 0t36 0t36 0t36 0t36 0t36 0" fill="none" stroke="#ef7fa0" stroke-width="5" stroke-linecap="round"/></svg>
+</header>
+
+<svg width="1" height="1" style="position:absolute;overflow:hidden;pointer-events:none" aria-hidden="true">
+  <defs>
+    <linearGradient id="gShade" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset=".65" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>
+    <radialGradient id="gFace" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></radialGradient>
+    <radialGradient id="gSun" cx=".14" cy=".02" r=".9"><stop offset="0" stop-color="#fff4d0" stop-opacity=".7"/><stop offset=".5" stop-color="#fff4d0" stop-opacity=".16"/><stop offset="1" stop-color="#fff4d0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gVig" cx=".5" cy=".45" r=".78"><stop offset=".62" stop-color="#0f142d" stop-opacity="0"/><stop offset="1" stop-color="#0f142d" stop-opacity=".2"/></radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <symbol id="p" viewBox="0 0 40 80">
+    <rect x="10" y="54" width="9" height="22" rx="3.5" fill="var(--pants,#34406a)"/><rect x="21" y="54" width="9" height="22" rx="3.5" fill="var(--pants,#34406a)"/>
+    <rect x="10" y="54" width="20" height="22" rx="3.5" fill="url(#gShade)"/>
+    <ellipse cx="14.2" cy="77.4" rx="6.8" ry="2.9" fill="#2a2433"/><ellipse cx="25.8" cy="77.4" rx="6.8" ry="2.9" fill="#2a2433"/>
+    <rect x="1.5" y="27" width="7.5" height="24" rx="3.7" fill="var(--shirt)"/><rect x="31" y="27" width="7.5" height="24" rx="3.7" fill="var(--shirt)"/>
+    <circle cx="5.2" cy="52" r="3.5" fill="var(--skin)"/><circle cx="34.8" cy="52" r="3.5" fill="var(--skin)"/>
+    <rect x="16.5" y="21" width="7" height="7" rx="2.5" fill="var(--skin)"/><rect x="16.5" y="21" width="7" height="3.4" rx="1.5" fill="#000" opacity=".2"/>
+    <rect x="6" y="24" width="28" height="36" rx="11" fill="var(--shirt)"/><rect x="6" y="24" width="28" height="36" rx="11" fill="url(#gShade)"/>
+    <path d="M14.5 24.5l5.5 7 5.5-7z" fill="#fff" opacity=".55"/>
+    <path d="M12 40q4 3 2 10M28 38q-3 4-1 11" stroke="#000" stroke-opacity=".14" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <circle cx="9.6" cy="14.6" r="2.3" fill="var(--skin)"/><circle cx="30.4" cy="14.6" r="2.3" fill="var(--skin)"/>
+    <ellipse cx="20" cy="13" rx="10" ry="11" fill="var(--skin)"/><ellipse cx="20" cy="13" rx="10" ry="11" fill="url(#gFace)"/>
+    <path d="M9.4 13.5C8.4 4 14.5-.5 20.2-.5s11.8 4.5 10.4 14C29 9.5 26.500 6.800 20.200 6.800S11.600 9.500 9.400 13.500z" fill="var(--hair)"/>
+    <path d="M13.500 2.500q6.500-2.600 12.500.2" stroke="#fff" stroke-opacity=".3" stroke-width="1.300" fill="none" stroke-linecap="round"/>
+    <path d="M13.200 10.300q2.600-1.700 5.200 0M21.600 10.300q2.600-1.700 5.200 0" stroke="var(--hair)" stroke-width="1.200" fill="none" stroke-linecap="round"/>
+    <ellipse cx="16" cy="13.600" rx="2.200" ry="1.700" fill="#fff"/><ellipse cx="24" cy="13.600" rx="2.200" ry="1.700" fill="#fff"/>
+    <circle cx="16.200" cy="13.700" r="1.250" fill="#3a2b22"/><circle cx="24.200" cy="13.700" r="1.250" fill="#3a2b22"/>
+    <circle cx="16.200" cy="13.700" r=".55" fill="#000"/><circle cx="24.200" cy="13.700" r=".55" fill="#000"/>
+    <circle cx="16.700" cy="13.100" r=".4" fill="#fff"/><circle cx="24.700" cy="13.100" r=".4" fill="#fff"/>
+    <path d="M20 14.500q-1.100 2.800.3 3.500" stroke="#000" stroke-opacity=".28" stroke-width=".9" fill="none" stroke-linecap="round"/>
+    <path d="M16.800 20.200q3.200 2.600 6.400 0" stroke="#8a3f48" stroke-width="1.300" fill="none" stroke-linecap="round"/>
+    <circle cx="13.200" cy="17.800" r="2.300" fill="#ff6f8f" opacity=".22"/><circle cx="26.800" cy="17.800" r="2.300" fill="#ff6f8f" opacity=".22"/>
+  </symbol>
+</svg>
+
+<main>
+
+<!-- 1 -->
+<article class="card" style="--c:#6b5bd2">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Two students in an exam, one sneaks a look at a hidden note while the other watches">
+    <rect width="320" height="180" fill="#cfe8ff"/><rect y="142" width="320" height="38" fill="#b4d0ea"/>
+    <circle cx="160" cy="28" r="15" fill="#fff" stroke="#23304a" stroke-width="2.5"/>
+    <line class="spin" x1="160" y1="28" x2="160" y2="18" stroke="#23304a" stroke-width="2.5" stroke-linecap="round" style="transform-origin:160px 28px"/>
+    <g class="bob"><use href="#p" x="42" y="60" width="40" height="80" style="--shirt:#ef7fa0;--skin:#f1c27d;--hair:#2b2b3c"/></g>
+    <rect class="peek" x="66" y="104" width="22" height="16" rx="2" fill="#fff" stroke="#23304a" stroke-width="1.5"/>
+    <rect x="22" y="112" width="96" height="9" rx="3" fill="#8a6a4a"/><rect x="30" y="121" width="6" height="22" fill="#6e533a"/><rect x="104" y="121" width="6" height="22" fill="#6e533a"/>
+    <path class="drip" d="M80 62q-4 7 0 9q4-2 0-9z" fill="#5fb4ee"/>
+    <g class="bob" style="animation-delay:.6s"><use href="#p" x="212" y="60" width="40" height="80" style="--shirt:#f2b84b;--skin:#c68a5e;--hair:#1f1b24"/></g>
+    <rect x="192" y="112" width="96" height="9" rx="3" fill="#8a6a4a"/><rect x="200" y="121" width="6" height="22" fill="#6e533a"/><rect x="274" y="121" width="6" height="22" fill="#6e533a"/>
+    <g class="pop"><ellipse cx="262" cy="42" rx="22" ry="17" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="262" y="48" text-anchor="middle" font-size="18">?!</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">1</span>You discover that your closest friend is cheating during an examination. Would you report it, confront your friend, or remain silent? Explain.</h2>
+  <p class="answer">I would confront my closest friend first and tell them that what they're doing is wrong. Even though they're my friend, I don't think it's right to tolerate something dishonest just because of our relationship. I would encourage them to admit their mistake and take responsibility for their actions. For me, honesty should always come before friendship.</p></div>
+</article>
+
+<!-- 2 -->
+<article class="card" style="--c:#f2b84b">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="At night, a person stares at a glowing expensive gift box nobody else knows about">
+    <rect width="320" height="180" fill="#2a2f5a"/><rect y="146" width="320" height="34" fill="#1d2142"/>
+    <circle cx="268" cy="34" r="16" fill="#fdf1c4"/><circle cx="276" cy="30" r="14" fill="#2a2f5a"/>
+    <g fill="#fff"><circle class="twinkle" cx="40" cy="30" r="2"/><circle class="twinkle" style="animation-delay:.5s" cx="110" cy="48" r="1.6"/><circle class="twinkle" style="animation-delay:1s" cx="200" cy="24" r="2"/></g>
+    <rect x="150" y="108" width="140" height="10" rx="3" fill="#8a6a4a"/><rect x="160" y="118" width="8" height="28" fill="#6e533a"/><rect x="272" y="118" width="8" height="28" fill="#6e533a"/>
+    <circle class="pulse" cx="220" cy="88" r="34" fill="#f2b84b" opacity=".35"/>
+    <g class="bob"><rect x="196" y="76" width="48" height="32" rx="4" fill="#f2b84b"/><rect x="216" y="76" width="8" height="32" fill="#ef7fa0"/><path d="M220 76q-16-16-8-6t8 6q16-16 8-6t-8 6" fill="none" stroke="#ef7fa0" stroke-width="4"/></g>
+    <path class="twinkle" d="M252 58l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff"/>
+    <g class="bob"><use href="#p" x="68" y="66" width="40" height="80" style="--shirt:#9fd8c3;--skin:#e0a97c;--hair:#3b2a22"/></g>
+    <g class="pop"><circle cx="64" cy="52" r="20" fill="#fff"/><text class="t" x="64" y="59" text-anchor="middle" font-size="20">?</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">2</span>You receive an expensive item that does not belong to you. Nobody knows that you have it. What would you do?</h2>
+  <p class="answer">I would return the expensive item to its rightful owner, even if nobody knows that I have it. Keeping something that doesn't belong to me would only make me feel guilty. I believe that doing the right thing shouldn't depend on whether someone is watching. My principles should remain the same regardless of the situation.</p></div>
+</article>
+
+<!-- 3 -->
+<article class="card" style="--c:#ef7fa0">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Three friends invite a fourth to join them while the person shakes their head">
+    <rect width="320" height="180" fill="#ffe1d6"/><rect y="142" width="320" height="38" fill="#f4c5b3"/>
+    <circle cx="40" cy="30" r="14" fill="#f9c74f"/>
+    <g class="hop"><use href="#p" x="150" y="62" width="40" height="80" style="--shirt:#6b5bd2;--skin:#f1c27d;--hair:#2b2b3c"/></g>
+    <g class="hop" style="animation-delay:.3s"><use href="#p" x="198" y="62" width="40" height="80" style="--shirt:#3aa6a0;--skin:#c68a5e;--hair:#1f1b24"/></g>
+    <g class="hop" style="animation-delay:.6s"><use href="#p" x="246" y="62" width="40" height="80" style="--shirt:#f2b84b;--skin:#e0a97c;--hair:#7a3b1d"/></g>
+    <g class="no-shake"><use href="#p" x="40" y="62" width="40" height="80" style="--shirt:#ef7fa0;--skin:#f1c27d;--hair:#3b2a22"/></g>
+    <g class="pop"><rect x="150" y="14" width="140" height="34" rx="14" fill="#fff" stroke="#23304a" stroke-width="2"/><path d="M190 48l-6 14 18-14z" fill="#fff" stroke="#23304a" stroke-width="2" stroke-linejoin="round"/><rect x="186" y="46" width="14" height="4" fill="#fff"/><text class="t" x="220" y="36" text-anchor="middle">Come on, join us!</text></g>
+    <g class="pop2"><circle cx="100" cy="46" r="18" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="100" y="52" text-anchor="middle" font-size="16">No</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">3</span>Your friends invite you to participate in an activity that goes against your personal values. How would you respond?</h2>
+  <p class="answer">I would respectfully decline their invitation and explain why I don't want to participate. I don't think I should compromise my personal values just to fit in with my friends. Having friends doesn't mean I have to agree with everything they do. I'd rather stay true to myself than do something I might regret later.</p></div>
+</article>
+
+<!-- 4 -->
+<article class="card" style="--c:#3aa6a0">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="A nervous person stands at a podium under a spotlight with an audience watching and a leader badge floating above">
+    <rect width="320" height="180" fill="#e6dcff"/><rect y="150" width="320" height="30" fill="#c9b9f0"/>
+    <path d="M0 0h50q-14 90 -50 150z" fill="#9a7be0"/><path d="M320 0h-50q14 90 50 150z" fill="#9a7be0"/>
+    <path class="pulse" d="M130 0h60l30 150h-120z" fill="#fff6c9" opacity=".6"/>
+    <g class="shake"><use href="#p" x="140" y="62" width="40" height="80" style="--shirt:#ef7fa0;--skin:#e0a97c;--hair:#2b2b3c"/></g>
+    <rect x="124" y="102" width="72" height="44" rx="5" fill="#8a6a4a"/><rect x="124" y="102" width="72" height="8" rx="3" fill="#6e533a"/>
+    <g class="float"><path d="M160 12l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z" fill="#f2b84b" stroke="#23304a" stroke-width="2" stroke-linejoin="round"/></g>
+    <g fill="#5a4a8a"><circle class="bob" cx="30" cy="168" r="11"/><circle class="bob" style="animation-delay:.4s" cx="80" cy="170" r="11"/><circle class="bob" style="animation-delay:.8s" cx="240" cy="170" r="11"/><circle class="bob" style="animation-delay:1.2s" cx="292" cy="168" r="11"/></g>
+    <g class="drip"><path d="M184 66q-4 7 0 9q4-2 0-9z" fill="#5fb4ee"/></g>
+  </svg>
+  <div class="body"><h2><span class="no">4</span>You are given an opportunity to become a leader, but you know that you lack confidence. Would you accept the responsibility?</h2>
+  <p class="answer">I would accept the responsibility even though I lack confidence. I believe that confidence is something I can develop through experience and learning from my mistakes. Being a leader doesn't mean you have to be perfect from the beginning. Sometimes, you just have to take the opportunity and improve along the way.</p></div>
+</article>
+
+<!-- 5 -->
+<article class="card" style="--c:#5fb4ee">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="A person watches a group chat where unkind messages keep appearing and a report button glows">
+    <rect width="320" height="180" fill="#d9f2e6"/><rect y="150" width="320" height="30" fill="#b9e0cd"/>
+    <g class="bob"><use href="#p" x="62" y="70" width="40" height="80" style="--shirt:#5fb4ee;--skin:#c68a5e;--hair:#1f1b24"/></g>
+    <rect x="170" y="14" width="96" height="150" rx="14" fill="#23304a"/><rect x="176" y="24" width="84" height="130" rx="8" fill="#fff"/>
+    <clipPath id="scr"><rect x="176" y="24" width="84" height="104" rx="8"/></clipPath>
+    <g clip-path="url(#scr)">
+      <g class="rise"><rect x="184" y="110" width="52" height="18" rx="8" fill="#e3e8f5"/></g>
+      <g class="rise" style="animation-delay:1.3s"><rect x="204" y="110" width="52" height="18" rx="8" fill="#ef7fa0"/></g>
+      <g class="rise" style="animation-delay:2.6s"><rect x="196" y="110" width="52" height="18" rx="8" fill="#ef7fa0"/></g>
+    </g>
+    <g class="pulse"><rect x="190" y="132" width="56" height="18" rx="9" fill="#3aa6a0"/></g><text class="t" x="218" y="145" text-anchor="middle" fill="#fff" style="fill:#fff;font-size:10px">Report</text>
+    <g class="pop"><circle cx="124" cy="62" r="18" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="124" y="69" text-anchor="middle" font-size="20">!</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">5</span>You witness someone being bullied online. What actions would you take?</h2>
+  <p class="answer">I would stand up for the person being bullied and offer them my support. I would also report the situation to someone who can properly handle it instead of making things worse. I don't think staying silent is the right decision when someone is being treated unfairly. Even a simple act of support can make a difference.</p></div>
+</article>
+
+<!-- 6 -->
+<article class="card" style="--c:#f08a4b">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="A vase tips off a table and breaks while a person watches in shock and nobody else is around">
+    <rect width="320" height="180" fill="#fff1cf"/><rect y="146" width="320" height="34" fill="#efd9a3"/>
+    <rect x="30" y="56" width="50" height="50" rx="4" fill="#fff" stroke="#23304a" stroke-width="2"/><circle cx="55" cy="81" r="14" fill="#9fd8c3"/>
+    <rect x="90" y="110" width="100" height="9" rx="3" fill="#8a6a4a"/><rect x="100" y="119" width="7" height="27" fill="#6e533a"/><rect x="174" y="119" width="7" height="27" fill="#6e533a"/>
+    <g transform="translate(24 0)"><g class="fall"><path d="M138 108q-10-18 4-26l-2-8h20l-2 8q14 8 4 26z" fill="#5fb4ee" stroke="#23304a" stroke-width="2" stroke-linejoin="round"/><path d="M143 90q-3 8-1 14" stroke="#fff" stroke-opacity=".6" stroke-width="2" fill="none" stroke-linecap="round"/></g></g>
+    <circle class="puff" cx="210" cy="150" r="10" fill="#fff"/>
+    <g class="shard"><path d="M195 154l8-10 6 10zM209 154l7-14 7 14zM201 156l5-5 5 5z" fill="#5fb4ee" stroke="#23304a" stroke-width="1.5" stroke-linejoin="round"/></g>
+    <path class="frag" style="--dx:-30px;--dy:-18px" d="M206 146l4-3 2 4z" fill="#5fb4ee" stroke="#23304a" stroke-width="1.2"/>
+    <path class="frag" style="--dx:26px;--dy:-22px" d="M212 146l5-2-1 5z" fill="#5fb4ee" stroke="#23304a" stroke-width="1.2"/>
+    <path class="frag" style="--dx:-12px;--dy:-26px" d="M209 145l3-3 2 3z" fill="#8ccaf5" stroke="#23304a" stroke-width="1.2"/>
+    <path class="frag" style="--dx:40px;--dy:-10px" d="M210 147l3-2 1 3z" fill="#8ccaf5" stroke="#23304a" stroke-width="1.2"/>
+    <g class="flinch"><use href="#p" x="232" y="64" width="40" height="80" style="--shirt:#f2b84b;--skin:#f1c27d;--hair:#7a3b1d"/></g>
+    <g class="ohno"><ellipse cx="252" cy="40" rx="26" ry="18" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="252" y="46" text-anchor="middle" font-size="14">Oh no!</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">6</span>You accidentally damage something that belongs to another person. Nobody sees what happened. What would you do?</h2>
+  <p class="answer">I would admit what happened and take responsibility for the damage. Even if nobody saw me, I know that I was responsible for it. I would apologize and find a way to make up for what I damaged. I believe that accountability matters more than avoiding the consequences of my actions.</p></div>
+</article>
+
+<!-- 7 -->
+<article class="card" style="--c:#9a7be0">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Two parents suggest a different career while their child holds a paintbrush and dreams of art">
+    <rect width="320" height="180" fill="#ffe9f0"/><rect y="148" width="320" height="32" fill="#f6cddb"/>
+    <g class="bob"><use href="#p" x="22" y="68" width="40" height="80" style="--shirt:#3aa6a0;--skin:#c68a5e;--hair:#1f1b24"/></g>
+    <g class="bob" style="animation-delay:.5s"><use href="#p" x="66" y="68" width="40" height="80" style="--shirt:#6b5bd2;--skin:#e0a97c;--hair:#7a3b1d"/></g>
+    <g class="pop"><rect x="26" y="12" width="82" height="34" rx="14" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="67" y="35" text-anchor="middle" font-size="18">🩺 ⚖️</text></g>
+    <g class="bob" style="animation-delay:1s"><use href="#p" x="206" y="68" width="40" height="80" style="--shirt:#ef7fa0;--skin:#f1c27d;--hair:#2b2b3c"/></g>
+    <rect x="254" y="62" width="48" height="38" rx="3" fill="#fff" stroke="#23304a" stroke-width="2.5"/>
+    <path class="draw" d="M262 90q10-22 20-4t14-16" fill="none" stroke="#ef7fa0" stroke-width="4" stroke-linecap="round"/>
+    <path d="M266 100l-10 48M290 100l10 48" stroke="#8a6a4a" stroke-width="4"/>
+    <g class="pop2"><circle cx="196" cy="34" r="22" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="196" y="42" text-anchor="middle" font-size="22">🎨</text></g>
+    <g class="float"><path d="M150 100h30m-8-8l8 8-8 8" fill="none" stroke="#9a7be0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </svg>
+  <div class="body"><h2><span class="no">7</span>Your family wants you to pursue a career that is different from your dream profession. How would you handle the situation?</h2>
+  <p class="answer">I would listen to my family's opinions while also explaining why I want to pursue my dream profession. I understand that they might have their own reasons and concerns about my future. However, I believe that I should also have a say in the life I'm going to build. I would try to find a way for us to understand each other's perspectives.</p></div>
+</article>
+
+<!-- 8 -->
+<article class="card" style="--c:#3aa6a0">
+  <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="A person holding a few coins weighs a want against a need on a balance scale">
+    <rect width="320" height="180" fill="#e3f3ff"/><rect y="150" width="320" height="30" fill="#c3def2"/>
+    <path d="M160 40v100M130 140h60" stroke="#23304a" stroke-width="5" stroke-linecap="round"/>
+    <g class="tilt" style="transform-origin:160px 40px">
+      <path d="M96 40h128" stroke="#23304a" stroke-width="5" stroke-linecap="round"/>
+      <path d="M96 40v28M224 40v28" stroke="#23304a" stroke-width="2"/>
+      <ellipse cx="96" cy="72" rx="30" ry="8" fill="#ef7fa0" stroke="#23304a" stroke-width="2"/>
+      <ellipse cx="224" cy="72" rx="30" ry="8" fill="#f2b84b" stroke="#23304a" stroke-width="2"/>
+      <text x="96" y="64" text-anchor="middle" font-size="26">👟</text><text x="224" y="64" text-anchor="middle" font-size="26">🍞</text>
+    </g>
+    <text class="t" x="52" y="30">Want</text><text class="t" x="246" y="30">Need</text>
+    <g class="bob"><use href="#p" x="60" y="76" width="40" height="80" style="--shirt:#9a7be0;--skin:#e0a97c;--hair:#3b2a22"/></g>
+    <g fill="#f2b84b" stroke="#23304a" stroke-width="2"><circle class="coin" cx="214" cy="138" r="9"/><circle class="coin" style="animation-delay:.3s" cx="236" cy="138" r="9"/><circle class="coin" style="animation-delay:.6s" cx="225" cy="122" r="9"/></g>
+    <g class="pop"><circle cx="120" cy="104" r="16" fill="#fff" stroke="#23304a" stroke-width="2"/><text class="t" x="120" y="111" text-anchor="middle" font-size="18">$?</text></g>
+  </svg>
+  <div class="body"><h2><span class="no">8</span>You have limited money and must choose between buying something you want and something you need. How would you decide?</h2>
+  <p class="answer">I would prioritize buying what I need rather than what I want. There are times when I have to understand that not everything I want is something I actually need. I would rather use my limited money wisely than spend it on something that only gives me temporary satisfaction. I can always buy what I want when I have enough to afford it.</p></div>
+</article>
+
+</main>
+
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  function make(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  var scenes = document.querySelectorAll('.scene');
+
+  scenes.forEach(function (s, n) {
+    var defs = make('defs', {});
+    s.insertBefore(defs, s.firstChild);
+    function mix(h, t, light) {
+      var v = parseInt(h.slice(1), 16), to = light ? 255 : 0;
+      return 'rgb(' + [v >> 16, (v >> 8) & 255, v & 255].map(function (c) { return Math.round(c + (to - c) * t); }).join(',') + ')';
+    }
+    function grad(id, stops) {
+      var g = make('linearGradient', { id: id, x1: 0, y1: 0, x2: 0, y2: 1 });
+      stops.forEach(function (st) { g.appendChild(make('stop', { offset: st[0], 'stop-color': st[1] })); });
+      defs.appendChild(g);
+    }
+    var rects = s.querySelectorAll('rect'), bg = rects[0], c = bg.getAttribute('fill');
+    grad('bg' + n, [[0, mix(c, .4, 1)], [.55, c], [1, mix(c, .14, 0)]]);
+    bg.setAttribute('fill', 'url(#bg' + n + ')');
+    for (var k = 1; k < rects.length; k++) {
+      if (rects[k].getAttribute('width') === '320' && +rects[k].getAttribute('y') >= 140) {
+        var f = rects[k].getAttribute('fill');
+        grad('fl' + n, [[0, mix(f, .2, 1)], [1, mix(f, .25, 0)]]);
+        rects[k].setAttribute('fill', 'url(#fl' + n + ')');
+        break;
+      }
+    }
+    // lighting layers sit behind people, props and speech bubbles
+    var anchor = bg;
+    for (var m = 1; m < rects.length; m++) {
+      if (rects[m].getAttribute('width') === '320' && +rects[m].getAttribute('y') >= 140) { anchor = rects[m]; break; }
+    }
+    function add(el) { s.insertBefore(el, anchor.nextSibling); anchor = el; }
+    add(make('rect', { width: 320, height: 180, fill: 'url(#gSun)', 'pointer-events': 'none' }));
+    var pool = make('ellipse', { cx: 160, cy: 160, rx: 150, ry: 15, fill: '#fff', opacity: '.16' });
+    pool.style.filter = 'blur(6px)';
+    add(pool);
+    // drifting light specks
+    for (var i = 0; i < 7; i++) {
+      var r = function (q) { return Math.abs(Math.sin((n + 1) * 12.9 + i * q)); };
+      var d = make('circle', { cx: 10 + r(78.2) * 300, cy: 8 + r(37.7) * 90, r: 1.3 + r(11.3) * 1.5, fill: '#fff', opacity: '.6' });
+      d.setAttribute('class', 'float');
+      d.style.animationDelay = (r(5.1) * 3).toFixed(2) + 's';
+      d.style.animationDuration = (3 + r(9.4) * 3).toFixed(2) + 's';
+      add(d);
+    }
+    // soft contact shadow under every person
+    s.querySelectorAll('use').forEach(function (u) {
+      var g = u.parentNode;
+      var sh = make('ellipse', { cx: +u.getAttribute('x') + 20, cy: +u.getAttribute('y') + 78.5, rx: 20, ry: 4.2, fill: '#0f142d', opacity: '.26' });
+      sh.style.filter = 'blur(1.5px)';
+      g.parentNode.insertBefore(sh, g);
+    });
+    // gentle edge vignette on top
+    s.appendChild(make('rect', { width: 320, height: 180, fill: 'url(#gVig)', 'pointer-events': 'none' }));
+  });
+
+  // animate only the scenes that are on screen
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('on', e.isIntersecting); });
+    }, { threshold: 0.25 });
+    scenes.forEach(function (s) { io.observe(s); });
+  } else {
+    scenes.forEach(function (s) { s.classList.add('on'); });
+  }
+
+  // click a scene to replay it from the start
+  scenes.forEach(function (s) {
+    s.addEventListener('click', function () {
+      s.classList.add('rp');
+      void s.getBoundingClientRect();
+      s.classList.remove('rp');
+    });
+  });
+})();
+</script>
+</body>
+</html>
